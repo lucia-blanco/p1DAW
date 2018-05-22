@@ -1,3 +1,75 @@
-<p>
-  feedback works!
-</p>
+<div class="pos-f-t">
+
+  <nav class="navbar">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+      <a class="navbar-toggler" style="color: #000000">Filter</a>
+    </button>
+  </nav>
+
+  <div class="collapse" id="navbarToggleExternalContent">
+    <div class="mb-3 row">
+      <div class="col">
+        <div class="mb-2">
+          <select [(ngModel)]="type" (change)="filterType('type', type)">
+            <option value="suggestion">suggestion</option>
+            <option value="question">question</option>
+            <option value="problem">problem</option>
+          </select>
+          <button *ngIf="type"(click)="removeFilter('type')">Remove filter</button>
+        </div>
+        <select [(ngModel)]="userStars" (change)="filterStars('userStars', userStars)">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+        <button *ngIf="userStars" (click)="removeFilter('userStars')"> Remove filter</button>
+      </div>
+      <div class="col">
+        <select [(ngModel)]="createdAt" (change)="filterDate('createdAt', createdAt)">
+          <option value="7">Last week</option>
+          <option value="30">Last month</option>
+          <option value="90">Last 3 months</option>
+          <option value="170">Last 6 months</option>
+        </select>
+        <button *ngIf="createdAt"  (click)="removeFilter('createdAt')">
+          Remove filter
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="list-group">
+  <a (click)="openChat(item.id, i)"
+		class="list-group-item list-group-item-action flex-column align-items-start"
+		*ngFor="let item of filteredItems?.slice().reverse(); let i = index ">
+		<div class="d-flex w-100 justify-content-between">
+			<h5 class="mb-1"> {{ item.name }} </h5>
+			<small> {{ item.createdAt | date:'short' }}
+			</small>
+    </div>
+    <div class="md-chip" [ngClass]="getColor(item.type)">
+      {{ item.type }}
+    </div>
+    <i *ngFor="let star of numberToArray(item.userStars)" class="fa fa-star"></i>
+    <p class="mb-1">{{ item.chatFeedback }}</p>
+    <small>{{ item.id }}</small>
+    <div *ngIf="expanded==i">
+      <ul class="msg-list">
+          <li class="msg" *ngFor="let message of transcript | async" [ngClass]="message.userId == item.createdByUserId ? 'msg-left' : 'msg-right'">
+            <div class="msg-body">
+            <div *ngIf="message.photoUrl">
+              <img class="small-img" src="{{ message.photoUrl }}">
+            </div>
+            {{ message.message }} <br>
+            <small class="text-muted"> {{ message.name }} {{ message.timestamp | date:'medium' }} </small>
+          </div>
+        </li>
+        <small *ngIf="(transcript|async)?.length == 0"> Room has no messages. </small>
+      </ul>
+    </div>
+  </a>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
