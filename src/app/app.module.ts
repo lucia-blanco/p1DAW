@@ -1,6 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireModule } from 'angularfire2';
+import { environment } from '../environments/environment';
+
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import { HighlightModule } from 'ngx-highlightjs';
@@ -32,7 +36,9 @@ import { FeedbackComponent } from './feedback/feedback.component';
     AngularFontAwesomeModule,
     BrowserAnimationsModule,
     HighlightModule.forRoot({theme: 'rainbow'}),
-    FormsModule
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule
   ],
   providers: [SlidesService],
   bootstrap: [AppComponent]
