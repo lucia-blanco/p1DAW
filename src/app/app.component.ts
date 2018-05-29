@@ -14,6 +14,7 @@ export class AppComponent {
     });
     this.avgRating = this.avgRating / this.filteredItems.length;
   }`;
+
   avgStarsCode2 = `private applyFilters() {
     this.filteredItems = _.filter(this.items, _.conforms(this.filters));
     this.averageStars();
@@ -35,42 +36,59 @@ filterDate(property: string, rule: number) {
     this.applyFilters();
   }`;
 
-  htmlCode = `
-  <h1>Hello</h1>
-  <p>fistrum pecador</p>
-  `;
+  fqotc1 = `db.list('/room-metadata',
+  ref => ref.orderByChild('closed').equalTo(false))
+  .valueChanges()
+  .subscribe(list => {
+    this.items = list;
+    this.items.forEach( room => {
+      this.db.list('/room-messages/' + room.id, ref => ref.orderByChild('id'))
+      .valueChanges()
+      .subscribe(messages => {
+        if (messages[messages.length - 1]['message'] !== '') {
+          room.message = messages[messages.length - 1]['message'];
+        } else {
+          room.message = 'Image';
+        }
+      });
+    });
+  }, error => {if (this.debug) { console.log(error); }});`;
 
-  highlight1 = `
-  <slide>
-    <source-code [code]="javaCode" [language]="'java'">
-    </source-code>
-  </slide>
-  `;
+  fqotc2 = `<div id="message">
+  <p style="margin-bottom: 0">{{ item.message }}</p>
+  <i style="margin-bottom: 0" class="fa fa-image"
+  *ngIf="item.message == 'Image'"></i>
+</div>`;
 
 
-  highlight2 = `
-export class AppComponent {
-  javaCode = \`
-  public class HelloWorld {
-    public static void main(String[] args) {
-      System.out.println("Hello world!");
+  modal1 = `function myfunc(className) {
+    var modal = document.getElementById('picModal');
+    var img =  document.getElementById('imgs');
+    var modalImg = document.getElementById("img01");
+    var close = document.getElementById('close');
+    if(className=="small-img") {
+      modal.style.display = "block";
+      modalImg.src = imgs.src;
+    } else {
+      div.className = "small-img";
+      modal.style.display = "none";
     }
-  }\`;
-}`;
-
-  javaCode = `
-  public class HelloWorld {
-    public static void main(String[] args) {
-      System.out.println("Hello world!");
+    close.onclick = function() {
+      modal.style.display = "none";
     }
-  }
-  `;
+  }`;
 
-  usdEurConverter = `
-  <slide>
-    <h1>USD - EUR Converter</h1>
-    <usd-eur-converter></usd-eur-converter>
-  </slide>
-  `;
+  modal2 = `<div *ngIf="item.photoUrl">
+  <img id="imgs" onclick="myfunc('small-img')"
+  class="small-img" src="{{item.photoUrl}}">
+</div>
+<!-- Modal (large image) -->
+<div id="picModal" class="modal">
+  <span id="close">&times;</span>
+  <img class="modal-content" id="img01">
+</div>`;
+
+
+  //  = ``;
 
 }
