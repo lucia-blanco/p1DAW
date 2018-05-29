@@ -20,7 +20,6 @@ import { PresentationComponent } from './presentation/presentation.component';
 import { SlidesService } from './shared/slides.service';
 import { SourceCodeComponent } from './source-code/source-code.component';
 import { UsdEurConverterComponent } from './usd-eur-converter/usd-eur-converter.component';
-import { FeedbackComponent } from './feedback/feedback.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +28,6 @@ import { FeedbackComponent } from './feedback/feedback.component';
     PresentationComponent,
     SourceCodeComponent,
     UsdEurConverterComponent,
-    FeedbackComponent
   ],
   imports: [
     BrowserModule,
@@ -37,8 +35,6 @@ import { FeedbackComponent } from './feedback/feedback.component';
     BrowserAnimationsModule,
     HighlightModule.forRoot({theme: 'rainbow'}),
     FormsModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireDatabaseModule
   ],
   providers: [SlidesService],
   bootstrap: [AppComponent]

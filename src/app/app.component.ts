@@ -8,7 +8,6 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent {
 
   consoleCode1 = 'git clone https://github.com/LuisJoseSanchez/chirimoya';
-  
   consoleCode2 = `
 cd chirimoya
 npm install
@@ -31,7 +30,7 @@ npm install
   <h1>Hello</h1>
   <p>fistrum pecador</p>
   `;
-  
+
   highlight1 = `
   <slide>
     <source-code [code]="javaCode" [language]="'java'">
