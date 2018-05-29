@@ -7,24 +7,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent {
 
-  consoleCode1 = 'git clone https://github.com/LuisJoseSanchez/chirimoya';
-  consoleCode2 = `
-cd chirimoya
-npm install
-  `;
+  avgStarsCode = `averageStars() {
+    this.avgRating = 0;
+    this.filteredItems.forEach(element => {
+      this.avgRating = this.avgRating + element.userStars;
+    });
+    this.avgRating = this.avgRating / this.filteredItems.length;
+  }`;
+  avgStarsCode2 = `private applyFilters() {
+    this.filteredItems = _.filter(this.items, _.conforms(this.filters));
+    this.averageStars();
+  }`;
 
-  consoleCode3 = `ng serve`;
+  avgStarsCode3 = `filterType(property: string, rule: any) {
+    this.filters[property] = val => val === rule;
+    this.applyFilters();
+  }
+filterDate(property: string, rule: number) {
+    const dateLimit = new Date().getTime() - (rule*24*60*60*1000);
+    this.filters[property] = val => val > dateLimit;
+    this.applyFilters();
+  }`;
 
-  presentationCode = `  <presentation>
-    <slide>
-      <h1>My presentation</h1>
-      <p>Ese pedazo de ese hombree fistro.</p>
-    </slide>
-
-    <slide>
-      <p>Lorem ipsum</p>
-    </slide>
-  </presentation>`;
+  avgStarsCode4 = `removeFilter(property: string) {
+    delete this.filters[property];
+    this[property] = null;
+    this.applyFilters();
+  }`;
 
   htmlCode = `
   <h1>Hello</h1>
